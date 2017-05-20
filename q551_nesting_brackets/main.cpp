@@ -127,13 +127,13 @@ tuple<bool, int> evaluate_brackets(const string& input)
 		}
 		else
 		{
-			if (brackets[i].is_match(left_brackets.top()))
+			if (left_brackets.empty() || !brackets[i].is_match(left_brackets.top()))
 			{
-				left_brackets.pop();
+				return make_tuple(false, brackets[i].get_index());
 			}
 			else
 			{
-				return make_tuple(false, brackets[i].get_index());
+				left_brackets.pop();
 			}
 		}
 	}
