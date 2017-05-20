@@ -98,9 +98,28 @@ private:
 vector<Bracket> to_brackets(const string& str)
 {
 	vector<Bracket> brackets;
-	for (size_t i = 0; i < str.length(); i++)
+	size_t counter = 0;
+	for (string::const_iterator iter = str.begin(); iter != str.end(); iter++)
 	{
-		Bracket b(str.substr(i, 1), i+1);
+		if (*iter == '*')
+		{
+			if (!brackets.empty() && brackets.back().get_type() == Bracket::type::PARENTHESE && brackets.back().get_side() == Bracket::side::LEFT)
+			{
+				Bracket b("(*", counter);
+				brackets.back() = b;
+			}
+			else if (iter + 1 != str.end() && *(iter + 1) == ')')
+			{
+				Bracket b("*)", ++counter);
+				brackets.push_back(b);
+				iter++;
+			}
+			continue;
+		}
+
+		string s;
+		s.push_back(*iter);
+		Bracket b(s, ++counter);
 		if (b.get_type() != Bracket::type::NONE)
 		{
 			brackets.push_back(b);
