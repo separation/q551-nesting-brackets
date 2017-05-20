@@ -168,7 +168,7 @@ tuple<bool, int> evaluate_brackets(const string& input)
 	
 }
 
-void main()
+int main()
 {
 	string line;
 	while(getline(cin, line))
@@ -186,4 +186,6 @@ void main()
 			cout << "NO " << error_index << endl;
 		}
 	}
+
+	return 0;
 }
