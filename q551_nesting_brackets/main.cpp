@@ -11,6 +11,7 @@ class Bracket
 public:
 	enum type
 	{
+		NONE,
 		PARENTHESE, // ()
 		SQUARE, // []
 		BRACES, // {}
@@ -25,7 +26,59 @@ public:
 	};
 
 public:
-	Bracket(const type& t, const side& s, int i) : m_type(t), m_side(s), m_index(i) {}
+	Bracket(const string& str, int i) : m_type(NONE), m_side(LEFT), m_index(i)
+	{
+		if (str == "(")
+		{
+			m_type = PARENTHESE;
+			m_side = LEFT;
+		}
+		else if (str == ")")
+		{
+			m_type = PARENTHESE;
+			m_side = RIGHT;
+		}
+		else if (str == "[")
+		{
+			m_type = SQUARE;
+			m_side = LEFT;
+		}
+		else if (str == "]")
+		{
+			m_type = SQUARE;
+			m_side = RIGHT;
+		}
+		else if (str == "{")
+		{
+			m_type = BRACES;
+			m_side = LEFT;
+		}
+		else if (str == "}")
+		{
+			m_type = BRACES;
+			m_side = RIGHT;
+		}
+		else if (str == "<")
+		{
+			m_type = ANGLE;
+			m_side = LEFT;
+		}
+		else if (str == ">")
+		{
+			m_type = ANGLE;
+			m_side = RIGHT;
+		}
+		else if (str == "(*")
+		{
+			m_type = STAR;
+			m_side = LEFT;
+		}
+		else if (str == "*)")
+		{
+			m_type = STAR;
+			m_side = RIGHT;
+		}
+	}
 	
 	bool is_match(const Bracket& b)
 	{
@@ -45,6 +98,14 @@ private:
 vector<Bracket> to_brackets(const string& str)
 {
 	vector<Bracket> brackets;
+	for (size_t i = 0; i < str.length(); i++)
+	{
+		Bracket b(str.substr(i, 1), i+1);
+		if (b.get_type() != Bracket::type::NONE)
+		{
+			brackets.push_back(b);
+		}
+	}
 	return brackets;
 }
 
