@@ -107,14 +107,15 @@ vector<Bracket> to_brackets(const string& str)
 			{
 				Bracket b("(*", counter);
 				brackets.back() = b;
+				continue;
 			}
 			else if (iter + 1 != str.end() && *(iter + 1) == ')')
 			{
 				Bracket b("*)", ++counter);
 				brackets.push_back(b);
 				iter++;
+				continue;
 			}
-			continue;
 		}
 
 		string s;
