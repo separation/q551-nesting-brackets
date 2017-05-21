@@ -95,7 +95,7 @@ private:
 	int m_index;
 };
 
-vector<Bracket> to_brackets(const string& str)
+tuple<size_t, vector<Bracket>> to_brackets(const string& str)
 {
 	vector<Bracket> brackets;
 	size_t counter = 0;
@@ -126,12 +126,14 @@ vector<Bracket> to_brackets(const string& str)
 			brackets.push_back(b);
 		}
 	}
-	return brackets;
+	return make_tuple(counter, brackets);
 }
 
 tuple<bool, int> evaluate_brackets(const string& input)
 {
-	vector<Bracket> brackets = to_brackets(input);
+	size_t item_count = 0;
+	vector<Bracket> brackets;
+	tie(item_count, brackets) = to_brackets(input);
 
 	if (brackets.size() == 0)
 	{
@@ -164,7 +166,7 @@ tuple<bool, int> evaluate_brackets(const string& input)
 	}
 	else
 	{
-		return make_tuple(false, left_brackets.top().get_index());
+		return make_tuple(false, item_count + 1);
 	}
 	
 }
